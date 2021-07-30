@@ -1,6 +1,7 @@
 var socket = io('http://localhost:3000');
 const log = console.log;
 
+
 const listener = document.querySelector(' #editor ' );
 const tb = document.querySelector(' #tool-bar ' );
 
@@ -16,4 +17,15 @@ listener.addEventListener("keyup", evt => {
 
 socket.on('message', data => {
     editor.setData(data);
+});
+
+
+socket.emit('send-nickname', '');
+
+socket.on('users', data => {
+    console.log(data);
+});
+
+socket.on('user', data => {
+    console.log(data);
 });

@@ -24,6 +24,14 @@ socket.emit('send-nickname', '');
 
 socket.on('users', data => {
     console.log(data);
+    var ul = document.getElementById("users-list");
+    ul.innerHTML = "";
+    data.forEach(element => {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(element));
+        ul.appendChild(li);
+    });
+
 });
 
 socket.on('user', data => {

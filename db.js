@@ -21,7 +21,12 @@ async function selectDocs() {
     const resp = await client.query(`SELECT * FROM arquivo WHERE id = 1`);
     return resp.rows[0];
 }
- 
-module.exports = { selectDocs };
 
-connect();
+async function insertDoc(texto) {
+    const client = await connect();
+    await client.query(`INSERT INTO arquivo (conteudo) VALUES (${texto})`);
+}
+ 
+module.exports = { selectDocs, insertDoc };
+
+ connect();

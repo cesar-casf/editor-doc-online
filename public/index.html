@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap/bootstrap.min.css">
 </head>
 <body data-editor="DecoupledDocumentEditor" data-collaboration="false" id="tool-bar">
 	<div>
@@ -26,10 +27,10 @@
 			</div>
 		</div>
 		<div class="centered">
-			<div class="row">
+			<div class="row2">
 				<div class="document-editor__toolbar"></div>
 			</div>
-			<div class="row row-editor">
+			<div class="row2 row-editor">
 				<div class="editor" id="editor">
 					<!-- conteudo -->
 				</div>
@@ -42,8 +43,10 @@
 		</p>
 	</footer>
 
-	<script src="../build/ckeditor.js"></script>
-	<script src="../node_modules/socket.io-client/dist/socket.io.js"></script>
+	<script src="./build/ckeditor.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<!-- <script src="../node_modules/socket.io-client/dist/socket.io.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 	<script src="./js/client.js"></script> 
 
 	<script>DecoupledDocumentEditor

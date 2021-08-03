@@ -1,0 +1,95 @@
+body,
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+
+
+#header {
+  top: 0;
+  width: 100%;
+  background-color: transparent;
+  transition: all ease-out 0.2s;
+}
+
+#header.active {
+	position: fixed;
+	height: auto;
+	box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2);
+	z-index: 9999;
+  }
+
+#header .navbar-collapse {
+	flex-grow: 0;
+	width: auto;
+}
+
+#header .nav-link {
+	text-transform: uppercase;
+	margin-left: 15px;
+	padding: 0%;
+	margin-right: 15px;
+	font-weight: 500;
+	padding-left: 0;
+	padding-right: 0;
+	border-bottom: solid 2px transparent;
+	transition: all 0.5s ease;
+}
+
+#header .nav-link:hover {
+	border-bottom: solid 2px var(--primary);
+  }
+
+  .logo-resize {
+	font-family: "Roboto", sans-serif;
+	width: 60%;
+	height: 60%;
+  }
+
+#calc{
+	margin-top: 100px;
+}
+
+#calc .calculator{
+	height: 700px;
+}
+
+#calc .border{
+	border-radius: 10px;
+}
+
+#rodape{
+	margin-top: 15px;
+	height: 200px;
+}
+
+#rodape .social{
+	padding: 60px;
+	height: 100%;
+	color: white;
+	align-items: center;
+	justify-content: center;
+}
+
+.copy{
+	padding-top: 15px;
+	padding-bottom: 15px;
+	background-color: #111416;
+	height: 50px;
+	font-size: small;
+	color: #fff;
+}
+
+.btn-social {
+	border-radius: 100%;
+	display: inline-flex;
+	width: 3.25rem;
+	height: 3.25rem;
+	font-size: 1.25rem;
+	justify-content: center;
+	align-items: center;
+  }
+
+  .b-red{
+	  border-color: red;
+  }

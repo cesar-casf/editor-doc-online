@@ -2,6 +2,7 @@ const { Socket } = require("dgram");
 
 const log = console.log;
 
+var documento;
 var todosClientes = [];
 let nomesUsados = [];
 let nomes = ['Warty Warthog', 'Hoary Hedgehog', 'Breezy Badger', 'Karmic Koala'];
@@ -15,8 +16,28 @@ function selecionarNome() {
     return nome;
 }
 
+const path = require('path');
+const express = require('express');
+const app = express();
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'public'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
+app.use('/documento', (req, res) => {
+    res.render('index.html');
+    var dco = req.query.doc;
+    documento = dco;
+    log('Arquivo: ' + dco);
+})
+
+// app.use('/documento/', (req, res) => {
+//     return res.send(`Documento de id = ${req.query.doc}`)
+// })
+
 const db = require("./db");
-const http = require("http").createServer();
+const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const port = 3000;
 
@@ -28,11 +49,11 @@ io.on('connection', (socket) => {
     socket.on('message', (evt) => {
         socket.broadcast.emit('message', evt);
         (async () => {
-            console.log('Insercao!');
+            log('Insercao!');
             
-            console.log('INSERT INTO CLIENTES');
-            const result = await db.insertDoc(await db.conectar(), evt);
-            console.log(result.rowCount);
+            log('INSERT INTO CLIENTES');
+            const result = await db.insertDoc(await db.conectar(), evt, documento);
+            log(result.rowCount);
         
         })();
     });
@@ -42,24 +63,24 @@ io.on('connection', (socket) => {
         let nome = selecionarNome();
         nomesUsados.push(nome);
         socket.nickname = nome;
-        console.log(socket.nickname);
+        log(socket.nickname);
 
         io.emit('users', nomesUsados);
         io.emit('user', socket.nickname);
-        console.log(nomesUsados);
+        log(nomesUsados);
     });
     //NICKNAME END
 
     socket.on('disconnect', function () {
         var i = nomesUsados.indexOf(socket.nickname);
         nomesUsados.splice(i, 1);
-        console.log('desconectou o usuario ' + socket.nickname);
+        log('desconectou o usuario ' + socket.nickname);
         io.emit('users', nomesUsados);
     });
 
     (async () => {
-        console.log('SELECT * FROM arquivo');
-        await db.selectDocs(await db.conectar()).then(function (dados) {
+        log('SELECT * FROM arquivo');
+        await db.selectDocs(await db.conectar(), documento).then(function (dados) {
             todosClientes.push(socket);
             log('connected');
             //console.log(dados);
@@ -70,7 +91,7 @@ io.on('connection', (socket) => {
 
 
         }, function (error) {
-            console.log("erro na requisicao" + error);
+            log("erro na requisicao" + error);
         }
         )
     })();

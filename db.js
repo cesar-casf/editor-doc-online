@@ -22,16 +22,16 @@ async function conectar(){
     return client;
 }
 
-async function selectDocs(client) {
+async function selectDocs(client, doc) {
     //const client = await connect();
-    const resp = await client.query(`SELECT * FROM arquivo WHERE id = 1`);
+    const resp = await client.query(`SELECT * FROM arquivo WHERE id = ${doc}`);
     return resp.rows[0];
 }
 
-async function insertDoc(client, texto) {
+async function insertDoc(client, texto, doc) {
     let data = [texto];
     //const client = await connect();
-    const sql = 'UPDATE arquivo SET conteudo=$1 WHERE id=1';
+    const sql = `UPDATE arquivo SET conteudo=$1 WHERE id=${doc}`;
     return await client.query(sql, data);
 }
  

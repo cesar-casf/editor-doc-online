@@ -26,10 +26,14 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.use('/documento', (req, res) => {
-    res.render('index.html');
+    res.render('documento.html');
     var dco = req.query.doc;
     documento = dco;
     log('Arquivo: ' + dco);
+})
+
+app.use('/', (req, res) => {
+    res.render('index.html');
 })
 
 // app.use('/documento/', (req, res) => {
@@ -65,9 +69,9 @@ io.on('connection', (socket) => {
         socket.nickname = nome;
         log(socket.nickname);
 
-        io.emit('users', nomesUsados);
-        io.emit('user', socket.nickname);
         log(nomesUsados);
+        socket.emit('user', socket.nickname);
+        io.emit('users', nomesUsados);
     });
     //NICKNAME END
 

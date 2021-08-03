@@ -4,7 +4,8 @@ async function connect() {
 
     const { Pool } = require('pg');
     const pool = new Pool({
-        connectionString: 'postgres://postgres:postgres@localhost:5433/trabalho-ecos12'
+        connectionString: 'postgres://postgres:postgres@localhost:5433/trabalho-ecos12',
+        max: 25
     });
 
     //apenas testando a conexão
@@ -16,17 +17,24 @@ async function connect() {
     return pool.connect();
 }
 
-async function selectDocs() {
+async function conectar(){
     const client = await connect();
+    return client;
+}
+
+async function selectDocs(client) {
+    //const client = await connect();
     const resp = await client.query(`SELECT * FROM arquivo WHERE id = 1`);
     return resp.rows[0];
 }
 
-async function insertDoc(texto) {
-    const client = await connect();
-    await client.query(`INSERT INTO arquivo (conteudo) VALUES (${texto})`);
+async function insertDoc(client, texto) {
+    let data = [texto];
+    //const client = await connect();
+    const sql = 'UPDATE arquivo SET conteudo=$1 WHERE id=1';
+    return await client.query(sql, data);
 }
  
-module.exports = { selectDocs, insertDoc };
+module.exports = { selectDocs, insertDoc, conectar };
 
  connect();

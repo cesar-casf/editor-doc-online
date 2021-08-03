@@ -24,9 +24,17 @@ http.listen(port, () => log(`server listening on port ${port}`));
 
 //PG
 io.on('connection', (socket) => {
+
     socket.on('message', (evt) => {
         socket.broadcast.emit('message', evt);
-        db.insertDoc(evt);
+        (async () => {
+            console.log('Insercao!');
+            
+            console.log('INSERT INTO CLIENTES');
+            const result = await db.insertDoc(await db.conectar(), evt);
+            console.log(result.rowCount);
+        
+        })();
     });
 
     //NICKNAME START
@@ -51,7 +59,7 @@ io.on('connection', (socket) => {
 
     (async () => {
         console.log('SELECT * FROM arquivo');
-        await db.selectDocs().then(function (dados) {
+        await db.selectDocs(await db.conectar()).then(function (dados) {
             todosClientes.push(socket);
             log('connected');
             //console.log(dados);

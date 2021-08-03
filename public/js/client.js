@@ -21,6 +21,7 @@ socket.on('message', data => {
 
 
 socket.emit('send-nickname', '');
+var myNick;
 
 socket.on('users', data => {
     console.log(data);
@@ -29,6 +30,16 @@ socket.on('users', data => {
     data.forEach(element => {
         var li = document.createElement("li");
         li.appendChild(document.createTextNode(element));
+        li.classList.add('list-group-item');
+        li.style.borderColor = '#1A5DFA';
+
+        log(element +' == '+ myNick)
+
+        if(element == myNick){
+            li.style.fontWeight = 'bold';
+            li.style.color = '#1A5DFA';
+        }
+            
         ul.appendChild(li);
     });
 
@@ -36,4 +47,5 @@ socket.on('users', data => {
 
 socket.on('user', data => {
     console.log(data);
+    myNick = data;
 });

@@ -1,4 +1,4 @@
-var socket = io('http://localhost:3000');
+var socket = io();
 const log = console.log;
 
 
@@ -32,9 +32,6 @@ socket.on('users', data => {
         li.appendChild(document.createTextNode(element));
         li.classList.add('list-group-item');
         li.style.borderColor = '#1A5DFA';
-
-        log(element +' == '+ myNick)
-
         if(element == myNick){
             li.style.fontWeight = 'bold';
             li.style.color = '#1A5DFA';

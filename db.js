@@ -24,7 +24,9 @@ async function conectar(){
 
 async function selectDocs(client, doc) {
     //const client = await connect();
-    const resp = await client.query(`SELECT * FROM arquivo WHERE id = ${doc}`);
+    let sql = `SELECT * FROM arquivo WHERE id = ${doc}`;
+    console.log(sql);
+    const resp = await client.query(sql);
     return resp.rows[0];
 }
 

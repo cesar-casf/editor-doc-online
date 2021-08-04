@@ -4,8 +4,8 @@ async function connect() {
 
     const { Pool } = require('pg');
     const pool = new Pool({
-        connectionString: 'postgres://postgres:postgres@localhost:5433/trabalho-ecos12',
-        max: 100
+        connectionString: 'postgres://vffyjxkovmqnsy:c249e93f0c4f81be868529168c1774c0f0dc2a4dd8911788a83da6807b2549d3@ec2-18-235-4-83.compute-1.amazonaws.com:5432/d3v1vns0ko2pqh',
+        max: 1000
     });
 
     //apenas testando a conexão

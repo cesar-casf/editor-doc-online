@@ -26,7 +26,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.use('/documento', (req, res) => {
-    log(req);
+    log(req.query.doc);
     var dco = req.query.doc;
     documento = dco;
     log('Arquivo: ' + dco);
@@ -52,7 +52,6 @@ app.use('/createdoc', (req, res) => {
 })
 
 app.use('/', (req, res) => {
-    log(req);
     res.render('index.html');
 })
 

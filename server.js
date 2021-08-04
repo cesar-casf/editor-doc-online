@@ -59,7 +59,7 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const port = 3000;
 
-http.listen(port, () => log(`server listening on port ${port}`));
+http.listen(process.env.PORT || port, () => log(`server listening on port ${port}`));
 
 //PG
 io.on('connection', (socket) => {

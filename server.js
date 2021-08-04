@@ -32,6 +32,19 @@ app.use('/documento', (req, res) => {
     log('Arquivo: ' + dco);
 })
 
+app.use('/createdoc', (req, res) => {
+    
+    (async () => {
+        await db.createDoc(await db.conectar()).then(function(dados){
+            
+            let texto = JSON.stringify(dados);
+            texto = JSON.parse(texto);
+            log(String(texto.id));
+            res.redirect(`/documento?doc=${String(texto.id)}`);
+        });
+    })();
+})
+
 app.use('/', (req, res) => {
     res.render('index.html');
 })
@@ -41,6 +54,7 @@ app.use('/', (req, res) => {
 // })
 
 const db = require("./db");
+const { createBrotliDecompress } = require("zlib");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const port = 3000;

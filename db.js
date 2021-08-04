@@ -5,7 +5,7 @@ async function connect() {
     const { Pool } = require('pg');
     const pool = new Pool({
         connectionString: 'postgres://postgres:postgres@localhost:5433/trabalho-ecos12',
-        max: 25
+        max: 100
     });
 
     //apenas testando a conexão
@@ -28,6 +28,12 @@ async function selectDocs(client, doc) {
     return resp.rows[0];
 }
 
+async function createDoc(client) {
+    const sql = `INSERT INTO arquivo (conteudo) VALUES ('') RETURNING id;`;
+    const resp = await client.query(sql);
+    return resp.rows[0];
+}
+
 async function insertDoc(client, texto, doc) {
     let data = [texto];
     //const client = await connect();
@@ -35,6 +41,6 @@ async function insertDoc(client, texto, doc) {
     return await client.query(sql, data);
 }
  
-module.exports = { selectDocs, insertDoc, conectar };
+module.exports = { selectDocs, insertDoc, conectar, createDoc };
 
  connect();

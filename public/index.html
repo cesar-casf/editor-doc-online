@@ -24,7 +24,21 @@
 		<div class="container">
 			<div class="row">
                 <div class="col-md-6">
-                    
+                    <div class="align-items-center justify-content-center" style="height: 500px; border: 1px solid #1A5DFA; border-radius: 10px; background-color: white; display: flex;">					
+						<button type="button" class="btn btn-primary" onclick="criaDoc()">Criar novo documento</button>
+					</div>
+                </div>
+				<div class="col-md-6">
+                    <div class="align-items-center justify-content-center" style="height: 500px; border: 1px solid #1A5DFA; border-radius: 10px; background-color: white; display: flex;">
+						<div class="row">
+							<div class="col-md-12 align-items-center justify-content-center d-flex"">
+								<input class="form-control" type="text" placeholder="Código do documento" id="doc_id" required>
+							</div>
+							<div class="col-md-12 align-items-center justify-content-center d-flex" style="margin-top: 15px;">
+								<button type="button" class="btn btn-success" onclick="abrirDoc()">Acessar documento existente</button>
+							</div>
+						</div>
+					</div>
                 </div>
             </div>
 		</div>
@@ -36,6 +50,7 @@
 	</footer>
 
 	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/inicio.js"></script>
 	<!-- <script src="../node_modules/socket.io-client/dist/socket.io.js"></script> -->
 
 

@@ -35,13 +35,18 @@ app.use('/documento', (req, res) => {
 app.use('/createdoc', (req, res) => {
     
     (async () => {
-        await db.createDoc(await db.conectar()).then(function(dados){
+        try{
+
+            await db.createDoc(await db.conectar()).then(function(dados){
+                
+                let texto = JSON.stringify(dados);
+                texto = JSON.parse(texto);
+                log(String(texto.id));
+                res.redirect(`/documento?doc=${String(texto.id)}`);
+            });
+        }catch{
             
-            let texto = JSON.stringify(dados);
-            texto = JSON.parse(texto);
-            log(String(texto.id));
-            res.redirect(`/documento?doc=${String(texto.id)}`);
-        });
+        }
     })();
 })
 

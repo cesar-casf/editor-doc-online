@@ -1,6 +1,18 @@
-const { Socket } = require("dgram");
+const path = require('path');
+const express = require('express');
+const app = express();
+
+const db = require("./db");
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
+const port = 3000;
 
 const log = console.log;
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'public'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 var documento;
 var todosClientes = [];
@@ -16,16 +28,8 @@ function selecionarNome() {
     return nome;
 }
 
-const path = require('path');
-const express = require('express');
-const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, 'public'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-
-app.use('/documento', (req, res) => {
+app.get('/documento', (req, res) => {
     log(req.query.doc);
     var dco = req.query.doc;
     documento = dco;
@@ -33,13 +37,11 @@ app.use('/documento', (req, res) => {
     res.render('documento.html');
 })
 
-app.use('/createdoc', (req, res) => {
+app.get('/createdoc', (req, res) => {
     
     (async () => {
         try{
-
             await db.createDoc(await db.conectar()).then(function(dados){
-                
                 let texto = JSON.stringify(dados);
                 texto = JSON.parse(texto);
                 log(String(texto.id));
@@ -51,19 +53,9 @@ app.use('/createdoc', (req, res) => {
     })();
 })
 
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
     res.render('index.html');
 })
-
-// app.use('/documento/', (req, res) => {
-//     return res.send(`Documento de id = ${req.query.doc}`)
-// })
-
-const db = require("./db");
-const { createBrotliDecompress } = require("zlib");
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
-const port = 3000;
 
 http.listen(process.env.PORT || port, () => log(`server listening on port ${port}`));
 
@@ -107,34 +99,15 @@ io.on('connection', (socket) => {
         await db.selectDocs(await db.conectar(), documento).then(function (dados) {
             todosClientes.push(socket);
             log('connected');
-            //console.log(dados);
             let texto = JSON.stringify(dados);
             texto = JSON.parse(texto);
-            //console.log(texto.conteudo);
             socket.send(String(texto.conteudo));
-
-
         }, function (error) {
             log("erro na requisicao" + error);
         }
         )
     })();
 });
-
-
-
-
-
-//SOCKET
-// io.on('connection', (socket) => {
-//     log('connected');
-//     console.log(texto);
-//     //socket.send(clientes);
-
-//     socket.on('message', (evt) => {
-//         socket.broadcast.emit('message', evt);
-//     });
-// });
 
 io.on('disconnect', evt => {
     log('some people left');

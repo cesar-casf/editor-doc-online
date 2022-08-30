@@ -1,5 +1,4 @@
-//const heroku = 'postgres://vffyjxkovmqnsy:c249e93f0c4f81be868529168c1774c0f0dc2a4dd8911788a83da6807b2549d3@ec2-18-235-4-83.compute-1.amazonaws.com:5432/d3v1vns0ko2pqh?ssl=true';
-const local =  'postgres://postgres:postgres@localhost:5433/trabalho-ecos12';
+const local =  'postgres://postgres:postgres@localhost:5432/editor_dB';
 
 async function connect() {
     if (global.connection)
@@ -8,15 +7,13 @@ async function connect() {
     const { Pool } = require('pg');
     const pool = new Pool({
         connectionString: process.env.DATABASE_URL || local,
-        ssl: { rejectUnauthorized: false },
+        ssl:  process.env.DATABASE_URL ? true : false,
         max: 100
     });
 
-    //apenas testando a conexão
     const client = await pool.connect();
     console.log("Pool de conexões no PostgreSQL criado!");
 
-    //guardando para usar sempre o mesmo
     global.connection = pool;
     return pool.connect();
 }
@@ -27,7 +24,6 @@ async function conectar(){
 }
 
 async function selectDocs(client, doc) {
-    //const client = await connect();
     let sql = `SELECT * FROM arquivo WHERE id = ${doc}`;
     console.log(sql);
     const resp = await client.query(sql);
@@ -43,7 +39,6 @@ async function createDoc(client) {
 
 async function insertDoc(client, texto, doc) {
     let data = [texto];
-    //const client = await connect();
     const sql = `UPDATE arquivo SET conteudo=$1 WHERE id=${doc}`;
     console.log(sql);
     return await client.query(sql, data);

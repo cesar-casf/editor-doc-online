@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr"></html>
+<head>
+	<title>Editor de Texto Online</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap/bootstrap.min.css">
+</head>
+<body data-editor="DecoupledDocumentEditor" data-collaboration="false" id="tool-bar">
+	<div class="row">
+		<div class="col-md-2" style="height: auto; position: absolute; margin-top: 7%; margin-left: 1.2%;">
+			<h4 style="color: white; margin-left: 8%; font-weight: bold;">Compartilhando com:</h4>
+			<ul id="users-list" class="list-group">
+				<!-- <li class="list-group-item">TESTE USER 1</li>
+				<li class="list-group-item" style="color: #1C39FA; font-weight: bold;">TESTE USER 2</li>
+				<li class="list-group-item">TESTE USER 3</li>
+				<li class="list-group-item">TESTE USER 4</li> -->
+			</ul>
+		</div>
+	</div>
+	<main>
+		<div class="message">
+			<div class="centered">
+			<center>
+					<img src="../img/EFEI_logo.ico" width="60" style="padding-top: 15px"></img>
+				
+				<h2 style="align-items: center">
+					<b>Editor de texto online</b>
+				</h2>
+			</center>
+			</div>
+		</div>
+		<div class="centered">
+			<div class="row2">
+				<div class="document-editor__toolbar"></div>
+			</div>
+			<div class="row2 row-editor">
+				<div class="editor" id="editor">
+					<!-- conteudo -->
+				</div>
+			</div></div>
+		</div>
+	</main>
+	<footer>
+		<p>
+			UNIFEI - Universidade Federal de Itajubá
+		</p>
+	</footer>
+
+	<script src="./build/ckeditor.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<!-- <script src="../node_modules/socket.io-client/dist/socket.io.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+	<script src="./js/client.js"></script> 
+
+	<script>DecoupledDocumentEditor
+			.create( document.querySelector( '.editor' ), {
+				
+				toolbar: {
+					items: [
+						'|',
+						'heading',
+						'fontSize',
+						'fontFamily',
+						'|',
+						'fontColor',
+						'fontBackgroundColor',
+						'|',
+						'bold',
+						'italic',
+						'underline',
+						'strikethrough',
+						'|',
+						'alignment',
+						'pageBreak',
+						'|',
+						'numberedList',
+						'bulletedList',
+						'|',
+						'outdent',
+						'indent',
+						'|',
+						'todoList',
+						'htmlEmbed',
+						'link',
+						'blockQuote',
+						'insertTable',
+						'imageInsert',
+						'imageUpload',
+						'mediaEmbed',
+						'|',
+						'undo',
+						'redo'
+					]
+				},
+				language: 'pt-br',
+				image: {
+					toolbar: [
+						'imageTextAlternative',
+						'imageStyle:full',
+						'imageStyle:side'
+					]
+				},
+				table: {
+					contentToolbar: [
+						'tableColumn',
+						'tableRow',
+						'mergeTableCells',
+						'tableCellProperties',
+						'tableProperties'
+					]
+				},
+				licenseKey: '',
+				
+				
+			} )
+			.then( editor => {
+				window.editor = editor;
+		
+				
+				
+				
+		
+				// Set a custom container for the toolbar.
+				document.querySelector( '.document-editor__toolbar' ).appendChild( editor.ui.view.toolbar.element );
+				document.querySelector( '.ck-toolbar' ).classList.add( 'ck-reset_all' );
+			} )
+			.catch( error => {
+				console.error( 'Oops, something went wrong!' );
+				console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+				console.warn( 'Build id: up7ytjslmjo1-ccdzlys5c2d' );
+				console.error( error );
+			} );
+	</script>
+
+</body>

@@ -412,10 +412,11 @@ main .message h2 {
 	padding: 0 var(--ck-sample-base-spacing);
 }
 
-.row {
+.row2 {
 	display: flex;
 	position: relative;
 }
+
 
 .btn {
 	cursor: pointer;
